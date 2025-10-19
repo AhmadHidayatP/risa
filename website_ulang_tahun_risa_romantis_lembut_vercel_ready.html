@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday, Risa! 🎂✨</title>
+  <meta name="description" content="Website ucapan ulang tahun romantis & lembut untuk Risa." />
+  <meta property="og:title" content="Happy Birthday, Risa! 🎂✨" />
+  <meta property="og:description" content="Sebuah kejutan kecil yang manis untukmu." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#fce7f3"/>
+
+  <!-- Google Font for a romantic script -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind Play CDN (sudah cukup untuk static site di Vercel) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Great Vibes', 'cursive'],
+            sans: ['Inter', 'ui-sans-serif', 'system-ui']
+          },
+          colors: {
+            blush: {
+              50: '#fff1f5', 100: '#ffe4ec', 200: '#fecdd8', 300: '#fda4af', 400: '#fb7185', 500: '#f43f5e'
+            },
+            lilac: {
+              100: '#f3e8ff', 200: '#e9d5ff', 300: '#d8b4fe', 400: '#c084fc'
+            }
+          },
+          keyframes: {
+            float: {
+              '0%': { transform: 'translateY(0) scale(1)', opacity: '0' },
+              '10%': { opacity: '0.9' },
+              '100%': { transform: 'translateY(-120vh) scale(1.1)', opacity: '0' }
+            },
+            glow: {
+              '0%,100%': { filter: 'drop-shadow(0 0 0px rgba(244,63,94,.0))' },
+              '50%': { filter: 'drop-shadow(0 0 8px rgba(244,63,94,.35))' }
+            }
+          },
+          animation: {
+            float: 'float linear var(--dur) forwards',
+            glow: 'glow 3s ease-in-out infinite'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Heart shape via CSS (two circles + square) */
+    .heart { position: relative; width: 16px; height: 16px; background: #f43f5e; transform: rotate(45deg); }
+    .heart:before, .heart:after { content: ''; position: absolute; width: 16px; height: 16px; background: #f43f5e; border-radius: 50%; }
+    .heart:before { left: -8px; }
+    .heart:after { top: -8px; }
+
+    .bg-soft {
+      background: radial-gradient(1200px 600px at 10% 10%, #fff0f3 0%, transparent 50%),
+                  radial-gradient(1000px 500px at 90% 20%, #f3e8ff 0%, transparent 50%),
+                  radial-gradient(1000px 500px at 50% 90%, #e0e7ff 0%, transparent 50%),
+                  linear-gradient(180deg, #fff7fb 0%, #f5f3ff 100%);
+    }
+
+    .fade-in { animation: fadein .9s ease-out both; }
+    @keyframes fadein { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0) } }
+  </style>
+</head>
+<body class="min-h-screen bg-soft text-slate-800 antialiased">
+  <!-- Floating hearts container -->
+  <div id="float-hearts" class="pointer-events-none fixed inset-0 overflow-hidden"></div>
+
+  <!-- Music (autoplay & loop) -->
+  <!-- Ganti src dengan file kamu, mis. /assets/risa.mp3 -->
+  <audio id="bgm" src="/assets/risa.mp3" preload="auto" loop autoplay></audio>
+
+  <!-- Top ribbon note (tap-to-unmute) -->
+  <div id="sound-banner" class="fixed top-3 left-1/2 -translate-x-1/2 z-40 hidden">
+    <div class="rounded-full bg-white/80 backdrop-blur px-4 py-2 text-sm shadow border border-white/60">
+      🔊 Musik sedang dimute oleh browser. <button id="btn-unmute" class="font-semibold underline">Tap untuk nyalakan</button>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <main class="relative z-10">
+    <section class="max-w-5xl mx-auto px-6 pt-24 pb-16 text-center">
+      <p class="uppercase tracking-[0.35em] text-sm text-rose-400/80">A special day</p>
+      <h1 class="mt-2 text-5xl sm:text-6xl md:text-7xl font-display text-rose-500/90 drop-shadow-[0_2px_0_rgba(255,255,255,0.9)] animate-glow">
+        Happy Birthday, Risa
+      </h1>
+      <p class="mt-4 text-lg sm:text-xl text-slate-700/80 fade-in">
+        Semoga hari ini penuh senyum, pelukan hangat, dan doa-doa yang indah. Terima kasih sudah menjadi pribadi yang begitu berarti.
+      </p>
+
+      <!-- Action chips -->
+      <div class="mt-8 flex items-center justify-center gap-3">
+        <button id="btn-play" class="hidden rounded-full bg-rose-500 text-white px-5 py-2 shadow hover:shadow-md transition">Putar Musik</button>
+        <button id="btn-confetti" class="rounded-full bg-white/80 border border-white/70 backdrop-blur px-5 py-2 shadow hover:shadow-md transition">Tambah Hati 💗</button>
+      </div>
+
+      <!-- Special Message Card -->
+      <div class="mt-14 grid place-items-center">
+        <article class="relative w-full max-w-2xl">
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-rose-200 via-lilac-200 to-rose-200 rounded-3xl blur opacity-80"></div>
+          <div class="relative rounded-3xl bg-white/80 backdrop-blur-xl border border-white/70 p-7 sm:p-10 shadow-lg">
+            <h2 class="text-2xl sm:text-3xl font-semibold text-rose-600">Pesan Spesial</h2>
+            <p class="mt-4 leading-relaxed text-slate-700">
+              Risa, setiap detik bersamamu adalah alasan untuk bersyukur. Semoga langkah-langkahmu selalu dimudahkan, mimpimu satu per satu terwujud, dan hatimu senantiasa dilingkupi bahagia. Selamat ulang tahun! 💖
+            </p>
+            <p class="mt-6 text-right font-semibold text-rose-500">— Dari seseorang yang care banget sama kamu</p>
+          </div>
+        </article>
+      </div>
+
+      <!-- Footer note -->
+      <p class="mt-12 text-xs text-slate-500">Didesain dengan penuh cinta • Romantis & Lembut • <span id="year"></span></p>
+    </section>
+  </main>
+
+  <script>
+    // Utility: random in range
+    const rand = (min, max) => Math.random() * (max - min) + min;
+
+    // Floating hearts generator
+    const floatBox = document.getElementById('float-hearts');
+    const makeHeart = () => {
+      const wrapper = document.createElement('div');
+      wrapper.style.position = 'absolute';
+      wrapper.style.left = rand(0, 100) + 'vw';
+      wrapper.style.bottom = '-24px';
+      wrapper.style.zIndex = 5;
+      const scale = rand(0.8, 1.8);
+      wrapper.style.transform = `translateY(0) scale(${scale})`;
+      wrapper.style.setProperty('--dur', rand(8, 16) + 's');
+      wrapper.className = 'animate-float';
+
+      const h = document.createElement('div');
+      h.className = 'heart';
+      h.style.opacity = String(rand(0.6, 1));
+      h.style.background = Math.random() > 0.5 ? '#fb7185' : '#f43f5e';
+      h.style.filter = 'blur(' + rand(0, 1.2) + 'px)';
+
+      wrapper.appendChild(h);
+      floatBox.appendChild(wrapper);
+
+      // cleanup after animation
+      const rm = () => wrapper.remove();
+      wrapper.addEventListener('animationend', rm);
+      setTimeout(rm, 18000);
+    };
+
+    // Burst of hearts
+    const burst = (n = 14) => { for (let i = 0; i < n; i++) setTimeout(makeHeart, i * 120); };
+
+    // Idle generator
+    let idleTimer = null;
+    const startHearts = () => { if (!idleTimer) idleTimer = setInterval(() => makeHeart(), 900); };
+    const stopHearts = () => { clearInterval(idleTimer); idleTimer = null; };
+
+    // Initialize
+    burst(24); // initial burst
+    startHearts();
+
+    document.getElementById('btn-confetti').addEventListener('click', () => burst(20));
+
+    // Year footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Background music handling
+    const audio = document.getElementById('bgm');
+    const banner = document.getElementById('sound-banner');
+    const btnUnmute = document.getElementById('btn-unmute');
+    const btnPlay = document.getElementById('btn-play');
+
+    // Try autoplay; if blocked, show banner and a play button
+    const tryPlay = async () => {
+      try {
+        audio.volume = 0.8;
+        await audio.play();
+      } catch (e) {
+        // Autoplay blocked
+        banner.classList.remove('hidden');
+        btnPlay.classList.remove('hidden');
+      }
+    };
+
+    // Some browsers require user interaction before audio plays
+    window.addEventListener('load', tryPlay);
+
+    const resumeAudio = async () => {
+      banner.classList.add('hidden');
+      btnPlay.classList.add('hidden');
+      try { await audio.play(); } catch (e) { /* ignore */ }
+    };
+
+    btnUnmute.addEventListener('click', resumeAudio);
+    btnPlay.addEventListener('click', resumeAudio);
+
+    // Optional: resume on first user gesture anywhere
+    const resumeOnce = () => { resumeAudio(); window.removeEventListener('pointerdown', resumeOnce); };
+    window.addEventListener('pointerdown', resumeOnce);
+  </script>
+</body>
+</html>
